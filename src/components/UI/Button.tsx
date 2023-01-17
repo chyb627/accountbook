@@ -2,7 +2,15 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-function Button({ children, onPress, mode, style }) {
+const Button: React.FC<{
+  children: React.ReactNode | string;
+  onPress: () => void;
+  mode?: 'flat';
+  style: {
+    minWidth: number;
+    marginHorizontal: number;
+  };
+}> = ({ children, onPress, mode, style }) => {
   return (
     <View style={style}>
       <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
@@ -12,7 +20,7 @@ function Button({ children, onPress, mode, style }) {
       </Pressable>
     </View>
   );
-}
+};
 
 export default Button;
 

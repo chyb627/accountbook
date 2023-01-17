@@ -1,16 +1,23 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-function IconButton({ icon, size, color, onPress }) {
+export type TypeIconName = string;
+
+const IconButton: React.FC<{
+  icon: TypeIconName;
+  size: number;
+  color: string | undefined;
+  onPress: () => void;
+}> = ({ icon, size, color, onPress }) => {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
       <View style={styles.buttonContainer}>
-        <Icon name={icon} size={size} color={color} />
+        <Ionicons name={icon} size={size} color={color} />
       </View>
     </Pressable>
   );
-}
+};
 
 export default IconButton;
 

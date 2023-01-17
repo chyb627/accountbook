@@ -1,8 +1,17 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 
 import AllExpenses from './src/screens/AllExpenses';
 import ManageExpense from './src/screens/ManageExpense';
@@ -12,8 +21,18 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import IconButton from './src/components/UI/IconButton';
 import ExpensesContextProvider from './src/store/expenses-context';
 
-const Stack = createNativeStackNavigator();
-const BottomTabs = createBottomTabNavigator();
+type TypeBottomTabsScreenParams = {
+  RecentExpenses: { id: string };
+  AllExpenses: { id: string };
+};
+
+type ScreenParams = {
+  ExpensesOverview: NavigatorScreenParams<TypeBottomTabsScreenParams>;
+  ManageExpense: undefined;
+};
+
+const Stack = createNativeStackNavigator<ScreenParams>();
+const BottomTabs = createBottomTabNavigator<TypeBottomTabsScreenParams>();
 
 function ExpensesOverview() {
   return (
@@ -89,3 +108,15 @@ function App() {
 }
 
 export default App;
+
+export const useRootNavigation = <RouteName extends keyof ScreenParams>() =>
+  useNavigation<NativeStackNavigationProp<ScreenParams, RouteName>>();
+
+export const useRootRoute = <RouteName extends keyof ScreenParams>() =>
+  useRoute<RouteProp<ScreenParams, RouteName>>();
+
+export const useBotomTabNavigation = <RouteName extends keyof TypeBottomTabsScreenParams>() =>
+  useNavigation<BottomTabNavigationProp<TypeBottomTabsScreenParams, RouteName>>();
+
+export const useBottomTabRoute = <RouteName extends keyof TypeBottomTabsScreenParams>() =>
+  useRoute<RouteProp<TypeBottomTabsScreenParams, RouteName>>();

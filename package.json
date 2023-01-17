@@ -8,7 +8,8 @@
     "pod": "cd ios && pod install && cd ..",
     "start": "react-native start",
     "aos:clean": "cd android && ./gradlew clean && cd ..",
-    "ios:clean": "cd ios && rm -rf Pods && pod cache clean --all && pod install && cd .."
+    "ios:clean": "cd ios && rm -rf Pods && pod cache clean --all && pod install && cd ..",
+    "test:typescript": "tsc"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.4.3",
@@ -28,6 +29,7 @@
     "@types/jest": "^26.0.23",
     "@types/react": "^18.0.21",
     "@types/react-native": "^0.70.6",
+    "@types/react-native-vector-icons": "^6.4.13",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
