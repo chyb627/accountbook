@@ -5,7 +5,11 @@ import { GlobalStyles } from '../../constants/styles';
 import ExpensesList from './ExpensesList';
 import ExpensesSummary from './ExpensesSummary';
 
-function ExpensesOutput({ expenses, expensesPeriod, fallbackText }) {
+const ExpensesOutput: React.FC<{
+  expenses: { amount: number; date: Date; description: string; id: string }[];
+  expensesPeriod: string;
+  fallbackText: string;
+}> = ({ expenses, expensesPeriod, fallbackText }) => {
   let content = <Text style={styles.infoText}> {fallbackText} </Text>;
 
   if (expenses.length > 0) {
@@ -18,7 +22,7 @@ function ExpensesOutput({ expenses, expensesPeriod, fallbackText }) {
       {content}
     </View>
   );
-}
+};
 
 export default ExpensesOutput;
 

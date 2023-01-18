@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-function ExpensesSummary({ expenses, periodName }) {
+const ExpensesSummary: React.FC<{
+  expenses: { amount: number; date: Date; description: string; id: string }[];
+  periodName: string;
+}> = ({ expenses, periodName }) => {
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.amount;
   }, 0);
@@ -13,7 +16,7 @@ function ExpensesSummary({ expenses, periodName }) {
       <Text style={styles.sum}>${expensesSum.toFixed(2)}</Text>
     </View>
   );
-}
+};
 
 export default ExpensesSummary;
 
