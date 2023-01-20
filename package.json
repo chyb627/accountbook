@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "aos": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator \"iPhone 14\"",
     "pod": "cd ios && pod install && cd ..",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
     "aos:clean": "cd android && ./gradlew clean && cd ..",
     "ios:clean": "cd ios && rm -rf Pods && pod cache clean --all && pod install && cd ..",
     "test:typescript": "tsc"
