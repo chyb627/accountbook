@@ -1,30 +1,62 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
+import { ExpensesList } from './ExpensesList';
+import { ExpensesSummary } from './ExpensesSummary';
 
-import ExpensesList from './ExpensesList';
-import ExpensesSummary from './ExpensesSummary';
+const DUMMY_EXPENSES = [
+  {
+    id: 'e1',
+    description: 'A pair of shoes',
+    amount: 59.99,
+    date: new Date('2023-01-01'),
+  },
+  {
+    id: 'e2',
+    description: 'A pair of shoes',
+    amount: 59.99,
+    date: new Date('2023-01-15'),
+  },
+  {
+    id: 'e3',
+    description: 'A pair of shoes',
+    amount: 59.99,
+    date: new Date('2023-01-18'),
+  },
+  {
+    id: 'e4',
+    description: 'A pair of shoes',
+    amount: 59.99,
+    date: new Date('2023-01-19'),
+  },
+  {
+    id: 'e5',
+    description: 'A pair of shoes',
+    amount: 59.99,
+    date: new Date('2023-01-20'),
+  },
+];
 
-const ExpensesOutput: React.FC<{
-  expenses: { amount: number; date: Date; description: string; id: string }[];
+export const ExpensesOutput: React.FC<{
   expensesPeriod: string;
-  fallbackText: string;
-}> = ({ expenses, expensesPeriod, fallbackText }) => {
-  let content = <Text style={styles.infoText}> {fallbackText} </Text>;
-
-  if (expenses.length > 0) {
-    content = <ExpensesList expense={expenses} />;
-  }
+  expenses?: {
+    id: string;
+    description: string;
+    amount: number;
+    date: Date;
+  }[];
+}> = (props) => {
+  // const expensesSum = props.expenses.reduce((sum: number, expense: number) => {
+  //   return sum + expense.amount;
+  // }, 0);
 
   return (
     <View style={styles.container}>
-      <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
-      {content}
+      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={props.expensesPeriod} />
+      <ExpensesList expenses={DUMMY_EXPENSES} />
     </View>
   );
 };
-
-export default ExpensesOutput;
 
 const styles = StyleSheet.create({
   container: {

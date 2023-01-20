@@ -1,12 +1,12 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
-import AllExpenses from '../screens/AllExpenses';
-import RecentExpenses from '../screens/RecentExpenses';
-import IconButton from '../components/UI/IconButton';
+import { AllExpenses } from '../screens/AllExpenses';
+import { RecentExpenses } from '../screens/RecentExpenses';
 import { GlobalStyles } from '../constants/styles';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Icon } from '../components/UI/Icons';
+import { Pressable } from 'react-native';
 
 export type TypeBottomTabsScreenParams = {
   RecentExpenses: { id: string };
@@ -24,14 +24,12 @@ export const BottomTabNavigation = () => {
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({ tintColor }) => (
-          <IconButton
-            icon="add"
-            size={24}
-            color={tintColor}
+          <Pressable
             onPress={() => {
               navigation.navigate('ManageExpense');
-            }}
-          />
+            }}>
+            <Icon name="add" size={24} color={tintColor} />
+          </Pressable>
         ),
       })}>
       <BottomTabs.Screen

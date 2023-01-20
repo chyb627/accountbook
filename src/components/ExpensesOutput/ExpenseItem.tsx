@@ -1,34 +1,37 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { GlobalStyles } from '../../constants/styles';
+import { useRootNavigation } from '../../navigation/RootNavigation';
 import { getFormattedDate } from '../../util/date';
 
-function ExpenseItem({ id, description, amount, date }) {
-  const navigation = useNavigation();
+export const ExpenseItem: React.FC<{
+  amount: number;
+  date: Date;
+  description: string;
+  id: string;
+}> = (props) => {
+  const navigation = useRootNavigation();
 
-  function expensePressHandler() {
+  const expensePressHandler = () => {
     navigation.navigate('ManageExpense', {
-      expenseId: id,
+      expenseId: props.id,
     });
-  }
+  };
 
   return (
     <Pressable onPress={expensePressHandler} style={({ pressed }) => pressed && styles.pressed}>
       <View style={styles.expenseItem}>
         <View>
-          <Text style={[styles.textBase, styles.description]}>{description}</Text>
-          <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
+          <Text style={[styles.textBase, styles.description]}>{props.description}</Text>
+          <Text style={styles.textBase}>{getFormattedDate(props.date)}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>{amount.toFixed(2)}</Text>
+          <Text style={styles.amount}>{props.amount}</Text>
         </View>
       </View>
     </Pressable>
   );
-}
-
-export default ExpenseItem;
+};
 
 const styles = StyleSheet.create({
   pressed: {

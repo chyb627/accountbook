@@ -32,5 +32,6 @@
   "editor.formatOnSave": true,
   "typescript.locale": "en",
   "editor.tabSize": 2,
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.compile.nullAnalysis.mode": "disabled"
 }

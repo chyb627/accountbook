@@ -10,13 +10,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 
-import ManageExpense from '../screens/ManageExpense';
+import { ManageExpense } from '../screens/ManageExpense';
 import { GlobalStyles } from '../constants/styles';
 import { BottomTabNavigation, TypeBottomTabsScreenParams } from './BottomTabNavigation';
 
 type ScreenParams = {
   ExpensesOverview: NavigatorScreenParams<TypeBottomTabsScreenParams>;
-  ManageExpense: undefined;
+  ManageExpense: { expenseId: string };
 };
 
 const Stack = createNativeStackNavigator<ScreenParams>();

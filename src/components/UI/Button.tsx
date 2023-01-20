@@ -1,48 +1,47 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
+import React, { ReactElement } from 'react';
+import { Pressable } from 'react-native';
+// export class Button extends React.Component{
 
-const Button: React.FC<{
-  children: React.ReactNode | string;
+//     render(){
+//         return (
+//             <Pressable
+//                 onPress={this.props.onPress}
+//                 hitSlop={this.props.hitSlop ?? {left:0, right:0, top:0, bottom:0}}
+//                 >
+//                 {this.props.children}
+//             </Pressable>
+//         )
+//     }
+// }
+
+export const Button: React.FC<{
+  onPressIn?: () => void;
+  onPressOut?: () => void;
   onPress: () => void;
-  mode?: 'flat';
-  style: {
-    minWidth: number;
-    marginHorizontal: number;
-  };
-}> = ({ children, onPress, mode, style }) => {
-  return (
-    <View style={style}>
-      <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
-        <View style={[styles.button, mode === 'flat' && styles.flat]}>
-          <Text style={[styles.buttonText, mode === 'flat' && styles.flatText]}>{children}</Text>
-        </View>
-      </Pressable>
-    </View>
-  );
-};
-
-export default Button;
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 4,
-    padding: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
-  },
-  flat: {
-    backgroundColor: 'transparent',
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-  },
-  flatText: {
-    color: GlobalStyles.colors.primary200,
-  },
-  pressed: {
-    opacity: 0.75,
-    backgroundColor: GlobalStyles.colors.primary100,
-    borderRadius: 4,
-  },
-});
+  hitSlop?: { left: number; right: number; top: number; bottom: number };
+  backgroundColor?: string;
+  paddingHorizontal?: number;
+  paddingVertical?: number;
+  children: ReactElement;
+}> = (props) => (
+  <Pressable
+    {...props}
+    onPressIn={props.onPressIn}
+    onPressOut={props.onPressOut}
+    onPress={props.onPress}
+    hitSlop={
+      props.hitSlop ?? {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      }
+    }
+    style={{
+      backgroundColor: props.backgroundColor,
+      paddingHorizontal: props.paddingHorizontal,
+      paddingVertical: props.paddingVertical,
+    }}>
+    {props.children}
+  </Pressable>
+);

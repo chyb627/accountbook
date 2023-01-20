@@ -1,24 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-const ExpensesSummary: React.FC<{
-  expenses: { amount: number; date: Date; description: string; id: string }[];
+export const ExpensesSummary: React.FC<{
   periodName: string;
-}> = ({ expenses, periodName }) => {
-  const expensesSum = expenses.reduce((sum, expense) => {
-    return sum + expense.amount;
-  }, 0);
+  expenses: {
+    id: string;
+    description: string;
+    amount: number;
+    date: Date;
+  }[];
+}> = (props) => {
+  const expensesSum = props.expenses.reduce(
+    (
+      sum: number,
+      expense: {
+        id: string;
+        description: string;
+        amount: number;
+        date: Date;
+      },
+    ) => {
+      return sum + expense.amount;
+    },
+    0,
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.period}>{periodName}</Text>
+      <Text style={styles.period}>{props.periodName}</Text>
       <Text style={styles.sum}>${expensesSum.toFixed(2)}</Text>
     </View>
   );
 };
-
-export default ExpensesSummary;
 
 const styles = StyleSheet.create({
   container: {
