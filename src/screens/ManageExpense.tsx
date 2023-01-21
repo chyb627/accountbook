@@ -1,16 +1,70 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import { useRootRoute } from '../navigation/RootNavigation';
+import React, { useCallback, useLayoutEffect } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { ExpenseButton } from '../components/UI/ExpenseButton';
+import { Icon } from '../components/UI/Icons';
+import { GlobalStyles } from '../constants/styles';
+import { useRootRoute, useRootNavigation } from '../navigation/RootNavigation';
 
 export const ManageExpense: React.FC = () => {
   const route = useRootRoute();
-  console.log('route', route.params);
+  const navigation = useRootNavigation();
 
-  // const editedExpenseId = route.params?.expenseId;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: route.params ? 'Edit Expense' : 'Add Expense',
+    });
+  });
+
+  const deleteExpenseHandler = () => {
+    console.log('clicked icon');
+  };
+
+  const cancelHandler = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+  const confirmHandler = () => {};
 
   return (
-    <View>
-      <Text>ManageExpense</Text>
+    <View style={styles.container}>
+      <View style={styles.buttons}>
+        <ExpenseButton mode="flat" style={styles.button} onPress={cancelHandler}>
+          Cancel
+        </ExpenseButton>
+        <ExpenseButton style={styles.button} onPress={confirmHandler}>
+          {route.params ? 'Update' : 'Add'}
+        </ExpenseButton>
+      </View>
+      {route.params && (
+        <View style={styles.deleteContainer}>
+          <Pressable onPress={deleteExpenseHandler}>
+            <Icon name="trash" color={GlobalStyles.colors.error500} size={36} />
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: GlobalStyles.colors.primary800,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
+  },
+  deleteContainer: {
+    marginTop: 16,
+    paddingTop: 8,
+    borderTopWidth: 2,
+    borderTopColor: 'GlobalStyles.colors.primary200',
+    alignItems: 'center',
+  },
+});

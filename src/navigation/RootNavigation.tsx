@@ -21,7 +21,7 @@ type ScreenParams = {
 
 const Stack = createNativeStackNavigator<ScreenParams>();
 
-export const RootNavigation = () => {
+export const RootNavigation: React.FC = () => {
   return (
     <Stack.Navigator
       screenOptions={{

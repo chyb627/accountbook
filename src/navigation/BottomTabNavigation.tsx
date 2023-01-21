@@ -9,8 +9,8 @@ import { Icon } from '../components/UI/Icons';
 import { Pressable } from 'react-native';
 
 export type TypeBottomTabsScreenParams = {
-  RecentExpenses: { id: string };
-  AllExpenses: { id: string };
+  RecentExpenses: undefined;
+  AllExpenses: undefined;
 };
 
 const BottomTabs = createBottomTabNavigator<TypeBottomTabsScreenParams>();
