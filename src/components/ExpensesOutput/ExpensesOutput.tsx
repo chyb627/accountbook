@@ -1,22 +1,25 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
+import { Expenses } from '../../store/expenses-context';
 import { ExpensesList } from './ExpensesList';
 import { ExpensesSummary } from './ExpensesSummary';
 
 export const ExpensesOutput: React.FC<{
   expensesPeriod: string;
-  expenses: {
-    id: string;
-    description: string;
-    amount: number;
-    date: Date;
-  }[];
+  expenses: Expenses[];
+  fallbackText: string;
 }> = (props) => {
+  let content = <Text style={styles.infoText}>{props.fallbackText}</Text>;
+
+  if (props.expenses.length > 0) {
+    content = <ExpensesList expenses={props.expenses} />;
+  }
+
   return (
     <View style={styles.container}>
       <ExpensesSummary expenses={props.expenses} periodName={props.expensesPeriod} />
-      <ExpensesList expenses={props.expenses} />
+      {content}
     </View>
   );
 };

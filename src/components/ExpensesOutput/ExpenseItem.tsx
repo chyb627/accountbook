@@ -2,14 +2,10 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 import { useRootNavigation } from '../../navigation/RootNavigation';
+import { Expenses } from '../../store/expenses-context';
 import { getFormattedDate } from '../../util/date';
 
-export const ExpenseItem: React.FC<{
-  amount: number;
-  date: Date;
-  description: string;
-  id: string;
-}> = (props) => {
+export const ExpenseItem: React.FC<Expenses> = (props) => {
   const navigation = useRootNavigation();
 
   const expensePressHandler = () => {

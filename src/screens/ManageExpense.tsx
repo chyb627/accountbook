@@ -1,59 +1,53 @@
-import React, { useCallback, useContext, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { ExpenseButton } from '../components/UI/ExpenseButton';
+import { ExpenseForm } from '../components/ManageExpense/ExpenseForm';
 import { Icon } from '../components/UI/Icons';
 import { GlobalStyles } from '../constants/styles';
-import { useRootRoute, useRootNavigation } from '../navigation/RootNavigation';
+
 import { ExpensesContext } from '../store/expenses-context';
 
-export const ManageExpense: React.FC = () => {
-  const route = useRootRoute();
-  const navigation = useRootNavigation();
+export const ManageExpense: React.FC = ({ navigation, route }) => {
   const expensesCtx = useContext(ExpensesContext);
+
+  const editedExpenseId = route.params?.expenseId;
+  const isEditing = !!editedExpenseId;
+
+  const selectedExpense = expensesCtx.expenses.find((expense) => expense.id === editedExpenseId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: route.params ? 'Edit Expense' : 'Add Expense',
+      title: isEditing ? 'Edit Expense' : 'Add Expense',
     });
-  });
+  }, [navigation, isEditing]);
 
-  const deleteExpenseHandler = () => {
-    expensesCtx.deleteExpense(route.params?.expenseId);
+  function deleteExpenseHandler() {
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
-  };
+  }
 
-  const cancelHandler = useCallback(() => {
+  function cancelHandler() {
     navigation.goBack();
-  }, [navigation]);
+  }
 
-  const confirmHandler = () => {
-    if (route.params) {
-      expensesCtx.updateExpense((editedExpenseId = route.params?.expenseId), {
-        description: 'Update Test',
-        amount: 39.99,
-        date: new Date('2023-01-21'),
-      });
+  function confirmHandler(expenseData) {
+    if (isEditing) {
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      expensesCtx.addExpense({
-        description: 'Add Test',
-        amount: 29.99,
-        date: new Date('2023-01-21'),
-      });
+      expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
-  };
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <ExpenseButton mode="flat" style={styles.button} onPress={cancelHandler}>
-          Cancel
-        </ExpenseButton>
-        <ExpenseButton style={styles.button} onPress={confirmHandler}>
-          {route.params ? 'Update' : 'Add'}
-        </ExpenseButton>
-      </View>
-      {route.params && (
+      <ExpenseForm
+        onCancel={cancelHandler}
+        onSubmit={confirmHandler}
+        submitButtonLabel={isEditing ? 'Update' : 'Add'}
+        defaultValues={selectedExpense}
+      />
+
+      {isEditing && (
         <View style={styles.deleteContainer}>
           <Pressable onPress={deleteExpenseHandler}>
             <Icon name="trash" color={GlobalStyles.colors.error500} size={36} />

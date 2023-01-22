@@ -3,14 +3,18 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { RootNavigation } from './src/navigation/RootNavigation';
 import { ExpensesContextProvider } from './src/store/expenses-context';
+import { StatusBar } from 'react-native';
 
 const App = () => {
   return (
-    <ExpensesContextProvider>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
-    </ExpensesContextProvider>
+    <>
+      <StatusBar barStyle="light-content" />
+      <ExpensesContextProvider>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </ExpensesContextProvider>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ import { BottomTabNavigation, TypeBottomTabsScreenParams } from './BottomTabNavi
 
 type ScreenParams = {
   ExpensesOverview: NavigatorScreenParams<TypeBottomTabsScreenParams>;
-  ManageExpense: { expenseId: string };
+  ManageExpense: { expenseId?: string };
 };
 
 const Stack = createNativeStackNavigator<ScreenParams>();

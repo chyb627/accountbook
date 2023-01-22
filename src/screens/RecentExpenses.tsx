@@ -13,5 +13,11 @@ export const RecentExpenses: React.FC = () => {
     return expense.date >= date7DaysAgo && expense.date <= today;
   });
 
-  return <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 Days" />;
+  return (
+    <ExpensesOutput
+      expenses={recentExpenses}
+      expensesPeriod="Last 7 Days"
+      fallbackText="No expenses registerd for the last 7 days"
+    />
+  );
 };

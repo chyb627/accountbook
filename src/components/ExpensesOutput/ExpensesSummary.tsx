@@ -1,15 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
+import { Expenses } from '../../store/expenses-context';
 
 export const ExpensesSummary: React.FC<{
   periodName: string;
-  expenses: {
-    id: string;
-    description: string;
-    amount: number;
-    date: Date;
-  }[];
+  expenses: Expenses[];
 }> = (props) => {
   const expensesSum = props.expenses.reduce(
     (
