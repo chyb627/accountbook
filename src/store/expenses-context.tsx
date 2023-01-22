@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Context, createContext, Dispatch, useReducer } from 'react';
+import React, { createContext, Dispatch, useReducer } from 'react';
 
 const DUMMY_EXPENSES = [
   {
@@ -81,32 +81,20 @@ type Action =
 
 type ExpensesDispatch = Dispatch<Action>;
 
+interface Context {
+  expenses: ExpensessState;
+  addExpense: (expenseData: Expenses) => void;
+  deleteExpense: (id: string) => void;
+  updateExpense: (id: string, expenseData: Expenses) => void;
+}
+
 const ExpensesDispatchContext = createContext<ExpensesDispatch | undefined>(undefined);
 
-export const ExpensesContext = createContext({
+export const ExpensesContext = createContext<Context>({
   expenses: [],
-  addExpense: ({
-    description,
-    amount,
-    date,
-  }: {
-    description: string;
-    amount: number;
-    date: Date;
-  }) => {},
-  deleteExpense: (id: string) => {},
-  updateExpense: (
-    id: string,
-    {
-      description,
-      amount,
-      date,
-    }: {
-      description: string;
-      amount: number;
-      date: Date;
-    },
-  ) => {},
+  addExpense: () => {},
+  deleteExpense: () => {},
+  updateExpense: () => {},
 });
 
 const expensesReducer = (state: ExpensessState, action: Action): ExpensessState => {
