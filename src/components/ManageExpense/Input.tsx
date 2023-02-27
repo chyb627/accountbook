@@ -1,28 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
 export const Input: React.FC<{
   label: string;
-  type?: string;
-  placeholder?: string;
-  maxLength?: number;
-  multiline?: boolean;
-  autocorrect?: boolean;
-  onChangeText: () => {};
-  style: {
-    flex: number;
-    // marginHorizontal: number;
-  };
+  invalid: boolean;
+  style?: any;
+  textInputConfig: TextInputProps;
 }> = ({ label, invalid, style, textInputConfig }) => {
   const inputStyles = [styles.input];
 
   if (textInputConfig && textInputConfig.multiline) {
-    inputStyles.push(styles.inputMultiline);
+    [inputStyles, styles.inputMultiline];
   }
 
   if (invalid) {
-    inputStyles.push(styles.invalidInput);
+    [inputStyles, styles.invalidInput];
   }
 
   return (
@@ -54,4 +47,6 @@ const styles = StyleSheet.create({
     minHeight: 100,
     textAlignVertical: 'top',
   },
+  invalidInput: {},
+  invalidLabel: {},
 });

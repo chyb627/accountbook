@@ -3,10 +3,13 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { ExpenseForm } from '../components/ManageExpense/ExpenseForm';
 import { Icon } from '../components/UI/Icons';
 import { GlobalStyles } from '../constants/styles';
+import { useRootNavigation, useRootRoute } from '../navigation/RootNavigation';
 
 import { ExpensesContext } from '../store/expenses-context';
 
-export const ManageExpense: React.FC = ({ navigation, route }) => {
+export const ManageExpense: React.FC = () => {
+  const navigation = useRootNavigation();
+  const route = useRootRoute();
   const expensesCtx = useContext(ExpensesContext);
 
   const editedExpenseId = route.params?.expenseId;
@@ -29,7 +32,7 @@ export const ManageExpense: React.FC = ({ navigation, route }) => {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData) {
+  function confirmHandler(expenseData: Omit<Expenses, 'id'>) {
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {

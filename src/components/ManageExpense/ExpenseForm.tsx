@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Expenses } from '../../store/expenses-context';
 import { getFormattedDate } from '../../util/date';
 import { ExpenseButton } from '../UI/ExpenseButton';
 import { Input } from './Input';
 
 export const ExpenseForm: React.FC<{
   onCancel: () => {};
-  onSubmit: () => {};
+  onSubmit: (expenseData: Omit<Expenses, 'id'>) => {};
   submitButtonLabel: string;
+  defaultValues: Expenses;
 }> = ({ submitButtonLabel, onCancel, onSubmit, defaultValues }) => {
   const [inputs, setInputs] = useState({
     amount: {
@@ -24,16 +26,16 @@ export const ExpenseForm: React.FC<{
     },
   });
 
-  function inputChangedHandler(inputIdentifier, enteredValue) {
+  const inputChangedHandler = useCallback((inputIdentifier: string, enteredValue: string) => {
     setInputs((curInputs) => {
       return {
         ...curInputs,
         [inputIdentifier]: { value: enteredValue, isValid: true },
       };
     });
-  }
+  }, []);
 
-  function submitHandler() {
+  const submitHandler = () => {
     const expenseData = {
       amount: +inputs.amount.value,
       date: new Date(inputs.date.value),
@@ -60,7 +62,7 @@ export const ExpenseForm: React.FC<{
     }
 
     onSubmit(expenseData);
-  }
+  };
 
   const formIsInvalid =
     !inputs.amount.isValid || !inputs.date.isValid || !inputs.description.isValid;
@@ -145,4 +147,5 @@ const styles = StyleSheet.create({
     minWidth: 120,
     marginHorizontal: 8,
   },
+  errorText: {},
 });
